@@ -15,9 +15,11 @@
     "@faker-js/faker": "^9.2.0",
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
     "express": "^4.21.1",
     "mongodb": "^6.11.0",
     "mongoose": "^8.8.2",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "validator": "^13.12.0"
   }
 }

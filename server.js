@@ -10,10 +10,11 @@ dotenv.config();
 // console.log('MONGO_URI:', process.env.MONGO_URI);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 //Middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Connect to MongoDB
 const connectDB = async () => {
@@ -32,6 +33,8 @@ const connectDB = async () => {
     await connectDB();
 })();
 
+//Register view engine
+app.set('view engine', 'ejs');
 
 //Register routes
 app.use('/api', routes);
