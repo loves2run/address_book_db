@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Book</title>
+</head>
+<body>
+    <header>
+        <h1>Brandon's Address Book</h1>
+        <a href="/api/new-address" class="btn">Add New Address</a>
+    </header>
+    <main>
+        <div class="card-container">
+            <% addresses.forEach(address => { %>
+            <div class="card">
+                <h2><%= address.firstName %> <%= address.lastName %></h2>
+                <p><strong>Phone:</strong> <%= address.phone %> </p>
+                <p><strong>Email:</strong> <%= address.email %> </p>
+                <p><strong>Address:</strong> <%= address.streetAddress %> </p>
+                <p><strong>City:</strong> <%= address.city %> </p>
+                <p><strong>State:</strong> <%= address.state %> </p>
+                <p><strong>Zip Code:</strong> <%= address.zipCode %> </p>
+                <p><strong>Categories:</strong> <%= address.category %> </p>
+                <div class="card-actions">
+                    <a href="/edit/<%= address._id %>" class="btn-edit">Edit</a>
+                    <a href="/delete/<%= address._id %>" class="btn-delete">Delete</a>
+                </div>
+            </div>
+          <%  }) %>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Address Book</p>
+    </footer>
+</body>
+</html>

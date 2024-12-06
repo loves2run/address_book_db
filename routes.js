@@ -1,6 +1,6 @@
 import express from 'express';
-import { getAllAddresses, searchAddresses, addNewAddress } from './controllers/addressControllers.js';
-
+import { getAllAddresses, searchAddresses, addNewAddress, } from './controllers/addressControllers.js';
+import { editAddress } from './controllers/edit-address.js';
 
 const router = express.Router();
 
@@ -13,8 +13,14 @@ router.get('/search', searchAddresses);
 //View new address form
 router.get('/new-address', addNewAddress);
 
-//allows me to add new address
-router.post('/new-address', addNewAddress)
+//Save new address
+router.post('/new-address', addNewAddress);
+
+//Display address to be edited
+router.get('/edit:id', editAddress);
+
+//Edit address
+router.patch('/edit/:id', editAddress);
 
 
 export default router;

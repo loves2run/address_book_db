@@ -13,16 +13,7 @@
     <% } %>
 
     <form action="/api/new-address" method="POST">
-        <input type="text" name="firstName" value="<%= typeof formData !== 'undefined' ? formData.firstName : '' %>" placeholder="First Name">
-        <input type="text" name="lastName" value="<%= typeof formData !== 'undefined' ? formData.lastName : '' %>" placeholder="Last Name">
-        <input type="text" name="phone" value="<%= typeof formData !== 'undefined' ? formData.phone : '' %>" placeholder="Phone">
-        <input type="email" name="email" value="<%= typeof formData !== 'undefined' ? formData.email : '' %>" placeholder="Email">
-        <input type="text" name="streetAddress" value="<%= typeof formData !== 'undefined' ? formData.streetAddress : '' %>" placeholder="Street Address">
-        <input type="text" name="city" value="<%= typeof formData !== 'undefined' ? formData.city : '' %>" placeholder="city">
-        <input type="text" name="state" value="<%= typeof formData !== 'undefined' ? formData.state : '' %>" placeholder="State">
-        <input type="text" name="zipCode" value="<%= typeof formData !== 'undefined' ? formData.zipCode : '' %>" placeholder="Zip Code">
-        <input type="text" name="category" value="<%= typeof formData !== 'undefined' ? formData.category : '' %>" placeholder="Enter categories (separate with commas)" title="Enter categories separated by commas, e.g.: family, work, school">
-        
+        <%- include('partials/form-fields.ejs') %>
         <button type="submit">Add Address</button>
     </form>
 </body>

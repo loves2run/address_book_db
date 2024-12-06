@@ -4,10 +4,11 @@ import validator from 'validator';
 //controller to get all addresses
 export const getAllAddresses = async (req, res) => {
     try {
-        const addresses = await Address.find();
-        res.status(200).json(addresses);
+        const addresses = await Address.find();  //Fetch all addresses
+        res.render('view-addresses', { addresses });  //Render the view-addresses.ejs
     } catch (err) {
-        res.statu(500).json({ error: err.message });
+        console.error('Error fetching addresses', err);
+        res.status(500).send('Failed to retrieve addresses.');
     }
 };
 
