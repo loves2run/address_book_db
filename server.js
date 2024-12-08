@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import http from 'node:http';
+import methodOverride from 'method-override';
 import routes from './routes.js';
 import { Address } from './models/address.js';
 
@@ -15,6 +16,7 @@ const PORT = process.env.PORT;
 //Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 //Connect to MongoDB
 const connectDB = async () => {

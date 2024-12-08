@@ -1,4 +1,5 @@
 import { Address } from '../models/address.js';
+import { validateAddressData } from './validationUtils.js';
 import validator from 'validator';
 
 //controller to get all addresses
@@ -98,84 +99,102 @@ export const searchAddresses = async (req, res) => {
 
 
 //controller to create new address and view in browser
+// export const addNewAddress = async (req, res) => {
+//     //if get request, show the form
+//     if (req.method === 'GET') {
+//         return res.render('add-address');
+//     }
+
+//     //if post request, process the form
+//     try {
+//         const errors = [];
+
+//         //validate input fields with validator
+//         if (!req.body.firstName || !validator.isAlpha(req.body.firstName)) {
+//             errors.push('First name is required and must contain only letters.');
+//         }
+
+//         if (!req.body.lastName || !validator.isAlpha(req.body.lastName)) {
+//             errors.push('Last name is required and must contain only letters.');
+//         }
+
+//         if(!req.body.email || !validator.isEmail(req.body.email)) {
+//             errors.push('A valid email address is required.');
+//         }
+
+//         if (!req.body.phone || !validator.isMobilePhone(req.body.phone, 'en-US')) {
+//             errors.push('A valid phone number is required.');
+//         }
+
+//         if (!req.body.zipCode || !validator.isNumeric(req.body.zipCode.toString())) {
+//             errors.push('Zip code must be numeric.');
+//         }
+
+//         if(errors.length > 0) {
+//             //if there are validations errors, re-render the form with errors
+//             return res.render('add-address', {
+//                 error: errors.join(' '), //combine error messages
+//                 formData: req.body  //Pass form data to repopulate fields
+//             });
+//         }
+
+//         //split categories string to an array and remove whitespace
+//         const category = req.body.category
+//         ? req.body.category.split(',').map(cat => cat.trim())
+//         : [];
+
+//         //create new address document
+//         const newAddress = new Address({
+//             firstName: req.body.firstName,
+//             lastName: req.body.lastName,
+//             phone: req.body.phone,
+//             email: req.body.email,
+//             streetAddress: req.body.streetAddress,
+//             city: req.body.city,
+//             zipCode: req.body.zipCode,
+//             category
+//         });
+
+//         //save to database
+//         await newAddress.save();
+
+//         //redirect to the main address list page
+//         res.redirect('/api');
+
+//     } catch (error) {
+//         console.error('Error saving address:', error);
+//         res.render('add-address', {
+//             error: 'Failed to save address. Please try again.',
+//             formData: req.body //pass back the form data to repopulate fields
+//         });
+//     }
+// };
+
+
 export const addNewAddress = async (req, res) => {
-    //if get request, show the form
     if (req.method === 'GET') {
         return res.render('add-address');
     }
 
-    //if post request, process the form
     try {
-        const errors = [];
-
-        //validate input fields with validator
-        if (!req.body.firstName || !validator.isAlpha(req.body.firstName)) {
-            errors.push('First name is required and must contain only letters.');
-        }
-
-        if (!req.body.lastName || !validator.isAlpha(req.body.lastName)) {
-            errors.push('Last name is required and must contain only letters.');
-        }
-
-        if(!req.body.email || !validator.isEmail(req.body.email)) {
-            errors.push('A valid email address is required.');
-        }
-
-        if (!req.body.phone || !validator.isMobilePhone(req.body.phone, 'en-US')) {
-            errors.push('A valid phone number is required.');
-        }
-
-        if (!req.body.zipCode || !validator.isNumeric(req.body.zipCode.toString())) {
-            errors.push('Zip code must be numeric.');
-        }
-
-        if(errors.length > 0) {
-            //if there are validations errors, re-render the form with errors
+        const validation = validateAddressData(req.body);
+        
+        if (!validation.isValid) {
             return res.render('add-address', {
-                error: errors.join(' '), //combine error messages
-                formData: req.body  //Pass form data to repopulate fields
+                error: validation.errors,
+                formData: req.body
             });
         }
 
-        //split categories string to an array and remove whitespace
-        const category = req.body.category
-        ? req.body.category.split(',').map(cat => cat.trim())
-        : [];
-
-        //create new address document
-        const newAddress = new Address({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            phone: req.body.phone,
-            email: req.body.email,
-            streetAddress: req.body.streetAddress,
-            city: req.body.city,
-            zipCode: req.body.zipCode,
-            category
-        });
-
-        //save to database
+        const newAddress = new Address(validation.processedData);
         await newAddress.save();
-
-        //redirect to the main address list page
         res.redirect('/api');
 
     } catch (error) {
         console.error('Error saving address:', error);
         res.render('add-address', {
             error: 'Failed to save address. Please try again.',
-            formData: req.body //pass back the form data to repopulate fields
+            formData: req.body
         });
     }
 };
-
-
-
-
-
-
-
-
-
-
-
