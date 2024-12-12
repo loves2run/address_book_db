@@ -1,6 +1,7 @@
 import express from 'express';
 import { getAllAddresses, searchAddresses, addNewAddress, } from './controllers/addressControllers.js';
 import { editAddress, viewAddressToEdit } from './controllers/edit-address-controller.js';
+import { deleteAddress  } from './controllers/delete-address-controller.js';
 
 const router = express.Router();
 
@@ -23,7 +24,7 @@ router.get('/edit/:id', viewAddressToEdit);
 router.patch('/edit/:id', editAddress);
 
 //Delete address
-// router.delete('/delete/:id', deleteAddress);
+router.delete('/delete/:id', deleteAddress);
 
 
 export default router;

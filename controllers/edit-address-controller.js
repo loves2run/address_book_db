@@ -59,8 +59,6 @@ export const editAddress = async (req, res) => {
             });
         }
 
-        // /api/edit/<%= address._id %>
-
         const updateAddress = await Address.findByIdAndUpdate(
             params,
             validation.processedData,
