@@ -23,8 +23,8 @@
                     <div class="card-actions">
                         <a href="/api/edit/<%= address._id %>" class="btn-edit">Edit</a><br>
                         <button 
-                            type="button"
                             class="btn-delete"
+                            type="button"
                             data-id="<%= address._id %>"
                             data-name="<%= address.firstName %> <%= address.lastName %>"
                             data-address="<%= address.streetAddress %>, <%= address.city %> <%= address.zipCode %>"
@@ -42,8 +42,8 @@
                 <p id="modalText">Are you sure you want to delete this address?</p>
                 <p id="modalName"></p>
                 <p id="modalAddress"></p>
-                <button id="confirmDelete" data-id="">Confirm</button>
-                <button id="cancelDelete">Cancel</button>
+                <button type="button" id="confirmDelete" data-id="">Confirm</button>
+                <button type="button" id="cancelDelete">Cancel</button>
             </div>
         </div>
 

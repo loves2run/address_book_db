@@ -14,8 +14,122 @@
 
     <form action="<%= action %>" method="POST">
         <%- include('partials/form-fields.ejs') %>
-        <button type="submit">Submit Edited Address</button>
+        <div class="formControls">
+            <button type="submit">Submit Edited Address</button>
+            <button type="button" id="cancelEditBtn">Cancel</button>
+        </div>
     </form>
+
+    <!-- Modal for delete confirmation box -->
+    <div id="cancelEditModal" class="modal">
+        <div class="modalContent">
+            <h2>Warning! You have unsaved changes. </h2>
+            <p id="modalText">Would you like to discard changes? Click cancel to continue editing. </p>
+            <button type="button" id="confirmCancelBtn" data-id="">Confirm</button>
+            <button type="button" id="continueEditBtn">Cancel</button>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            //get all necessary elements
+            const cancelEditBtn = document.getElementById('cancelEditBtn');
+            const cancelEditModal = document.getElementById('cancelEditModal');
+            const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+            const continueEditBtn = document.getElementById('continueEditBtn');
+            const initialFormData = <%- JSON.stringify(formData) %>;
+
+            //check if all elements exist
+            if (!cancelEditBtn || !confirmCancelBtn || !confirmCancelBtn || !continueEditBtn ) {
+                console.error('One or more required elements not found');
+                return;
+            }
+
+            //handle cancel edit button click
+            cancelEditBtn.addEventListener('click', () => {
+                const formFields = document.querySelectorAll('form input, form select, form textArea');
+                const currentFormData = {};
+
+                formFields.forEach(field => {
+                    if (field.type === 'checkbox' || field.type === 'radio') {
+                        currentFormData[field.name] = field.checked;
+                    } else {
+                        currentFormData[field.name] = field.value;
+                    }
+                });
+
+                const normalize = value => Array.isArray(value) ? value.join(',') : value || '';
+                let hasChanges = false;
+
+                Object.keys(initialFormData).forEach(key => {
+                    if (key === '_id' || key === '__v') return;
+                    const initialValue = normalize(initialFormData[key]);
+                    const currentValue = normalize(currentFormData[key]);
+
+                    if (initialValue !== currentValue) {
+                        hasChanges = true;
+                        console.log(`Change detected: ${key} | Initial: ${initialValue} | Current: ${currentValue}`);
+                    }
+                });
+
+                if (hasChanges) {
+                    cancelEditModal.style.display = 'block';
+                } else {
+                    window.location.href = '/api/';
+                }
+            });
+
+            //handle continue editing (modal close)
+            continueEditBtn.addEventListener('click', () => {
+                cancelEditModal.style.display = 'none';
+            });
+
+            //handle confirm cancel
+            confirmCancelBtn.addEventListener('click', () => {
+                window.location.href = '/api/';
+            });
+        });
+
+    </script>
+
+    <style>
+            .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modalContent {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        #confirmCancelBtn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        #continueEditBtn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+    </style>
 </body>
 </html>
 
