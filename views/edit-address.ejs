@@ -15,7 +15,7 @@
     <form action="<%= action %>" method="POST">
         <%- include('partials/form-fields.ejs') %>
         <div class="formControls">
-            <button type="submit">Submit Edited Address</button>
+            <button type="submit">Update Address</button>
             <button type="button" id="cancelEditBtn">Cancel</button>
         </div>
     </form>
@@ -29,9 +29,9 @@
             <button type="button" id="continueEditBtn">Cancel</button>
         </div>
     </div>
+    
+    <script>  
 
-
-    <script>
         document.addEventListener('DOMContentLoaded', () => {
             //get all necessary elements
             const cancelEditBtn = document.getElementById('cancelEditBtn');
@@ -40,11 +40,6 @@
             const continueEditBtn = document.getElementById('continueEditBtn');
             const initialFormData = <%- JSON.stringify(formData) %>;
 
-            //check if all elements exist
-            if (!cancelEditBtn || !confirmCancelBtn || !confirmCancelBtn || !continueEditBtn ) {
-                console.error('One or more required elements not found');
-                return;
-            }
 
             //handle cancel edit button click
             cancelEditBtn.addEventListener('click', () => {
@@ -94,7 +89,7 @@
     </script>
 
     <style>
-            .modal {
+        .modal {
             display: none;
             position: fixed;
             top: 0;

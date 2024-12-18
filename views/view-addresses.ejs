@@ -54,13 +54,35 @@
             </div>
         </div>
 
+
+        <div id="editSuccessModal" class="modal">
+            <div class="modalContent">
+                <span class="close">&times;</span>
+                <h2>Success!</h2>
+                <p>Address has been updated successfully.</p>
+            </div>
+        </div>
+
+
+        //modal to display on successful new address submission
+        <div id="addSuccessModal" class="modal">
+            <div class="modalContent">
+                <span class="close">&times;</span>
+                <h2>Success!</h2>
+                <p>Address has been successfully added.</p>
+            </div>
+        </div>
     </main>
     <footer>
         <p>&copy; 2024 My Address Book</p>
     </footer>
 
-    <script>
+    
 
+    <script>
+/*********************  
+ * For deletion logic
+ * ******************************/
         //get modal elements
         const deleteModal = document.getElementById('deleteModal');
         const modalText = document.getElementById('modalText');
@@ -118,58 +140,145 @@
             } catch (error) {
                 console.error('Error deleting address. Please try again.');
             }
-            deleteModal.style.display = 'none';
+            deleteModal.classList.add('show');
         });
 
         //handle cancel button
         cancelDelete.addEventListener('click', () => {
-            deleteModal.style.display='none';
+            deleteModal.classList.remove('show');
         })
 
         //close modal if clicking outside
         window.addEventListener('click', (event) => {
             if (event.target === deleteModal) {
-                deleteModal.style.display = 'none';
+                deleteModal.classList.remove('show');
             }
         });
+
+
+/***************************
+ * For added edit success modal and new address added success modal
+ * *************************/
+        // Check for success parameter in URL
+        window.onload = function() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.get('success') === 'true') {
+                        showEditModal();
+                    }
+
+                    if (urlParams.get('added') === 'true') {
+                        showAddModal();
+                    }
+                }
+
+                function showEditModal() {
+                    const modal = document.getElementById('editSuccessModal');
+                    modal.classList.add('show');
+
+
+                    // Remove success parameter from URL without refreshing
+                    const url = new URL(window.location);
+                    url.searchParams.delete('success');
+                    window.history.replaceState({}, '', url);
+
+                    // Close modal when clicking X
+                    const closeBtn = modal.querySelector('.close');
+                    closeBtn.onclick = function() {
+                        modal.classList.remove('show');
+                    }
+
+                    // Close modal when clicking outside
+                    window.onclick = function(event) {
+                        if (event.target === modal) {
+                            modal.classList.remove('show');
+                        }
+                    }
+
+                    // Auto-close after 3 seconds
+                    setTimeout(() => {
+                        modal.classList.remove('show');
+                    }, 3000);
+                }
+
+                function showAddModal() {
+                    const modal = document.getElementById('addSuccessModal');
+                    modal.classList.add('show');
+
+                    //remove added parameter from URL without refreshing
+                    const url = new URL(window.location);
+                    url.searchParams.delete('added');
+                    window.history.replaceState({}, '', url);
+
+                      // Close modal when clicking X
+                      const closeBtn = modal.querySelector('.close');
+                    closeBtn.onclick = function() {
+                        modal.classList.remove('show');
+                    }
+
+                    // Close modal when clicking outside
+                    window.onclick = function(event) {
+                        if (event.target === modal) {
+                            modal.classList.remove('show');
+                        }
+                    }
+
+                    // Auto-close after 3 seconds
+                    setTimeout(() => {
+                        modal.classList.remove('show');
+                    }, 3000);
+                }
     </script>
 
-    <style>
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
 
-        .modalContent {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-        }
+    .modalContent {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        border-radius: 5px;
+        width: 80%;
+        max-width: 500px;
+    }
 
-        #confirmDelete {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
+    #confirmDelete {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
 
-        #cancelDelete {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            cursor: pointer;
-        }
-    </style>
+    #cancelDelete {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+    }
+
+    .close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .show {
+        display: block;
+    }
+
+</style>
 </body>
 </html>

@@ -188,7 +188,7 @@ export const addNewAddress = async (req, res) => {
 
         const newAddress = new Address(validation.processedData);
         await newAddress.save();
-        res.redirect('/api');
+        res.redirect('/api?added=true');
 
     } catch (error) {
         console.error('Error saving address:', error);

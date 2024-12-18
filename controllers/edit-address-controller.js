@@ -65,11 +65,15 @@ export const editAddress = async (req, res) => {
             { new: true, runValidators: true }
         );
 
+        console.log('Updated address:', updateAddress);
+
         if (!updateAddress) {
             return res.stats(404).send('Address not found');
         }
 
-        res.redirect('/api/');
+        console.log('Redirecting to:', '/api/?success=true');
+        
+        res.redirect('/api/?success=true');
 
     } catch (error) {
         console.error('Error updating address:', error);
