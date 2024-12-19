@@ -1,7 +1,8 @@
 import express from 'express';
-import { getAllAddresses, searchAddresses, addNewAddress, } from './controllers/addressControllers.js';
+import { getAllAddresses, addNewAddress, } from './controllers/addressControllers.js';
 import { editAddress, viewAddressToEdit } from './controllers/edit-address-controller.js';
 import { deleteAddress  } from './controllers/delete-address-controller.js';
+import { searchAddresses } from './controllers/search-controller.js';
 
 const router = express.Router();
 

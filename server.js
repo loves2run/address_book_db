@@ -2,13 +2,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import http from 'node:http';
 import methodOverride from 'method-override';
 import routes from './routes.js';
-import { Address } from './models/address.js';
 
 dotenv.config();
-// console.log('MONGO_URI:', process.env.MONGO_URI);
 
 const app = express();
 const PORT = process.env.PORT;
@@ -17,6 +14,7 @@ const PORT = process.env.PORT;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.use(express.static('public'));
 
 //Connect to MongoDB
 const connectDB = async () => {
