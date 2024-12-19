@@ -42,7 +42,7 @@
                 <p id="modalText">Are you sure you want to delete this address?</p>
                 <p id="modalName"></p>
                 <p id="modalAddress"></p>
-                <button type="button" id="confirmDelete" data-id="">Confirm</button>
+                <button type="button" id="confirmDeleteBtn" data-id="">Confirm</button>
                 <button type="button" id="cancelDelete">Cancel</button>
             </div>
         </div>
@@ -88,9 +88,11 @@
         const modalText = document.getElementById('modalText');
         const modalName = document.getElementById('modalName');
         const modalAddress = document.getElementById('modalAddress');
-        const confirmDelete = document.getElementById('confirmDelete');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
         const cancelDelete = document.getElementById('cancelDelete');
         const deleteSuccessModal = document.getElementById('deleteSuccessModal');
+
+        console.log(confirmDeleteBtn);
 
         //add click event listeners to all delete buttons
         document.querySelectorAll('.btn-delete').forEach((button) => {
@@ -105,17 +107,17 @@
                 //update deletemodal content
                modalName.textContent = name;
                modalAddress.textContent = address;
-               confirmDelete.setAttribute('data-id', id);
+               confirmDeleteBtn.setAttribute('data-id', id);
 
                //show modal
-               deleteModal.style.display = 'block';
+               deleteModal.classList.add('show');
 
             });
         });
 
         //handle confirm delete
-        confirmDelete.addEventListener('click', async () => {
-            const id = confirmDelete.getAttribute('data-id');
+        confirmDeleteBtn.addEventListener('click', async () => {
+            const id = confirmDeleteBtn.getAttribute('data-id');
 
             try {
                 const response = await fetch(`/api/delete/${id}`, {
@@ -126,7 +128,7 @@
 
                 if (response.ok) {
                     //show deleteSuccessModal
-                    deleteSuccessModal.style.display = 'block';
+                    deleteSuccessModal.classList.add('show');
 
 
                     //reload page or remove element from DOM
@@ -145,27 +147,31 @@
 
         //handle cancel button
         cancelDelete.addEventListener('click', () => {
+            console.log('Cancel button clicked');
             deleteModal.classList.remove('show');
         })
 
         //close modal if clicking outside
         window.addEventListener('click', (event) => {
             if (event.target === deleteModal) {
+                console.log('Window clicked', event.target);
                 deleteModal.classList.remove('show');
             }
         });
 
 
 /***************************
- * For added edit success modal and new address added success modal
+ * For added edit success modal  new address added success modal
  * *************************/
         // Check for success parameter in URL
         window.onload = function() {
                     const urlParams = new URLSearchParams(window.location.search);
+                    //check for success flag on edit
                     if (urlParams.get('success') === 'true') {
                         showEditModal();
                     }
 
+                    //check for added flag when new address is added
                     if (urlParams.get('added') === 'true') {
                         showAddModal();
                     }
@@ -222,10 +228,10 @@
                         }
                     }
 
-                    // Auto-close after 3 seconds
+                    // Auto-close after 2 seconds
                     setTimeout(() => {
                         modal.classList.remove('show');
-                    }, 3000);
+                    }, 2000);
                 }
     </script>
 
@@ -250,7 +256,7 @@
         max-width: 500px;
     }
 
-    #confirmDelete {
+    #confirmDeleteBtn {
         background-color: #dc3545;
         color: white;
         border: none;
