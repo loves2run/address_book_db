@@ -60,15 +60,13 @@ export const searchAddresses = async (req, res) => {
         //Return response
         res.json({
             status: 'Success',
-            data: {
-                results,
-                pagination: {
-                    currentPage: parseInt(page),
-                    totalPages: Math.ceil(total / limit),
-                    totalResults: total,
-                    hasNextPage: skip + results.length < total,
-                    hasPrevPage: page > 1
-                }
+            results,
+            pagination: {
+                currentPage: parseInt(page),
+                totalPages: Math.ceil(total / limit),
+                totalResults: total,
+                hasNextPage: skip + results.length < total,
+                hasPrevPage: page > 1
             }
         });
 

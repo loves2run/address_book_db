@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Address Form</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <title>Edit-Address</title>
 </head>
 <body>
     <h1>Edit Address</h1>
@@ -15,8 +17,8 @@
     <form action="<%= action %>" method="POST">
         <%- include('partials/form-fields.ejs') %>
         <div class="formControls">
-            <button type="submit">Update Address</button>
-            <button type="button" id="cancelEditBtn">Cancel</button>
+            <button class="btn" type="submit">Update Address</button>
+            <button class="btn" type="button" id="cancelEditBtn">Cancel</button>
         </div>
     </form>
 
@@ -25,8 +27,8 @@
         <div class="modalContent">
             <h2>Warning! You have unsaved changes. </h2>
             <p id="modalText">Would you like to discard changes? Click cancel to continue editing. </p>
-            <button type="button" id="confirmCancelBtn" data-id="">Confirm</button>
-            <button type="button" id="continueEditBtn">Cancel</button>
+            <button type="button" class="btn" id="confirmCancelBtn" data-id="">Confirm</button>
+            <button type="button" class="btn" id="continueEditBtn">Cancel</button>
         </div>
     </div>
     
@@ -89,7 +91,7 @@
     </script>
 
     <style>
-        .modal {
+        /* .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -123,7 +125,7 @@
             border: none;
             padding: 8px 16px;
             cursor: pointer;
-        }
+        } */
     </style>
 </body>
 </html>

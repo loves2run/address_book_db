@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Address Form</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <title>Add-Address</title>
 </head>
 <body>
     <h1>Add New Address</h1>
@@ -14,7 +16,7 @@
 
     <form action="/api/new-address" method="POST">
         <%- include('partials/form-fields.ejs') %>
-        <button type="submit">Add Address</button>
+        <button class="btn" type="submit">Add Address</button>
     </form>
 
 </body>
