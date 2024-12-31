@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 export const deleteAddress = async (req, res) => {
     try {
         const addressId = req.params.id;
-        console.log('Incoming DELETE request from ID:', addressId);
+        // console.log('Incoming DELETE request from ID:', addressId);
 
         //validate ID
         if(!mongoose.isValidObjectId(addressId)) {
@@ -20,7 +20,7 @@ export const deleteAddress = async (req, res) => {
             return res.status(404).send('Address not found');
         }
 
-        console.log('Deleted Address:', deletedAddress);
+        // console.log('Deleted Address:', deletedAddress);
 
         //send success response
         return res.status(200).json({

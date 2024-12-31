@@ -17,11 +17,11 @@ const seedDatabase = async () => {
         const fakeAddresses = Array.from ({ length: 100 }).map(() => ({
             firstName: faker.person.firstName(),
             lastName: faker.person.lastName(),
-            phone: faker.phone.number(),
+            phone: faker.phone.number({ style: 'human'}),
             email: faker.internet.email(),
             streetAddress: faker.location.streetAddress(),
             city: faker.location.city(),
-            state: faker.location.state(),
+            state: faker.location.state({ abbreviated: true }),
             zipCode: faker.location.zipCode(),
             category: [faker.word.noun(), faker.word.noun()]
         }));

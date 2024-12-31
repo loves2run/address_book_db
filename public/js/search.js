@@ -1,16 +1,21 @@
+import { initializeDeleteModal, serveDeleteSuccessModal, initializeModalsOnLoad } from './utils.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('searchForm');
-    const searchResults = document.getElementById('searchResults');
     const loadingIndicator = document.getElementById('loadingIndicator');
     const clearButton = document.getElementById('clearSearch');
     const cardContainer = document.querySelector('.card-container');
+    const deleteButtons = document.querySelectorAll('.btn-delete');
 
+    //initialize delete modal on initial page load
+    initializeDeleteModal();
+   
     // Function to show/hide loading indicator
     const toggleLoading = (show) => {
         loadingIndicator.style.display = show ? 'block' : 'none';
     };
 
-    // Function to create address card HTML matching your existing structure
+    // Function to create address card HTML matching existing structure
     const createAddressCard = (address) => {
         return `
             <div class="card">
@@ -27,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         type="button"
                         data-id="${address._id}"
                         data-name="${address.firstName} ${address.lastName}"
-                        data-address="${address.streetAddress}, ${address.city} ${address.zipCode}"
+                        data-address="${address.streetAddress}, ${address.city} ${address.state} ${address.zipCode}"
                     >
                         Delete
                     </button>
@@ -126,11 +131,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event delegation for delete button function
     cardContainer.addEventListener('click', (event) => {
+
+        console.log('Card Container clicked', event.target);
+
         if (event.target.classList.contains('btn-delete')) {
+
+            console.log('Delete button clicked:', event.target.dataset);
+
             const button = event.target;
             const id = button.dataset.id;
             const name = button.dataset.name;
             const address = button.dataset.address;
+
+            console.log('Delete button data:', { id, name, address });
     
             // Update modal content
             const modalName = document.getElementById('modalName');
@@ -183,25 +196,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('sortBy').addEventListener('change', debouncedSearch);
     document.getElementById('sortOrder').addEventListener('change', debouncedSearch);
 
-    // // Initialize delete functionality for initial page load
-    // initializeDeleteButtons();
-
     //ensures delete modal is added after search
     const ensureModalExists = () => {
         const modal = document.getElementById('deleteModal');
         if (!modal) {
             const modalHTML = `
                 <div id="deleteModal" class="modal">
-                    <div class="modalContent">
-                        <h3>Delete Address</h3>
-                        <p id="modalName"></p>
-                        <p id="modalAddress"></p>
-                        <button id="confirmDeleteBtn" class="btn ConfirmDeleteBtn">Confirm</button>
-                        <button id="cancelDeleteBtn" class="btn cancelDeleteBtn">Cancel</button>
-                    </div>
+                <div class="modalContent">
+                    <h2>Delete Address</h2>
+                    <p id="modalText">Are you sure you want to delete this address?</p>
+                    <p id="modalName"></p>
+                    <p id="modalAddress"></p>
+                    <button type="button" class="btn" id="confirmDeleteBtn" data-id="">Confirm</button>
+                    <button type="button" class="btn" id="cancelDeleteBtn">Cancel</button>
+                </div>
                 </div>
             `;
             document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+            // addModalListeners();
+            initializeDeleteModal();
         }
     };
 });
