@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardContainer = document.querySelector('.card-container');
     const deleteButtons = document.querySelectorAll('.btn-delete');
 
+    // console.log('Initial pagination element:', document.querySelector('.pagination'));
+
     //initialize delete modal on initial page load
     initializeDeleteModal();
    
@@ -19,14 +21,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const createAddressCard = (address) => {
         return `
             <div class="card">
-                <h2>${address.firstName} ${address.lastName}</h2>
-                <p><strong>Phone:</strong> ${address.phone || 'N/A'}</p>
-                <p><strong>Email:</strong> ${address.email || 'N/A'}</p>
-                <p><strong>Address:</strong> ${address.streetAddress}</p>
-                <p>${address.city}, ${address.state} ${address.zipCode}</p>
-                <p><strong>Categories:</strong> ${address.category}</p>
+                <div class="card-title">
+                    <h2>${address.firstName} ${address.lastName}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="card-section">
+                        <p>Phone</p>
+                        <p>${address.phone || 'N/A'}</p>
+                    </div>
+                    <div class="card-section">
+                        <p>Email</p>
+                        <p>${address.email || 'N/A'}</p>
+                    </div>              
+                    <div class="card-section">
+                        <p>Address</p>
+                        <p>${address.streetAddress}</p>
+                        <p>${address.city}, ${address.state} ${address.zipCode}</p>
+                    </div>
+                    <div class="card-section">
+                        <p>Categories</p>
+                        <p>${address.category}</p>
+                    </div>
+                </div>
                 <div class="card-actions">
-                    <a href="/api/edit/${address._id}" class="btn">Edit</a><br>
+                    <button class="btn-edit btn">
+                        <a href="/api/edit/${address._id}" class="btn">Edit</a><br>
+                    </button>
                     <button 
                         class="btn-delete btn"
                         type="button"
@@ -43,25 +63,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to create pagination HTML
     const createPaginationHTML = (pagination) => {
+        console.log('Pagination data:', pagination);
         const { currentPage, totalPages, totalResults } = pagination;
         let paginationHtml = '<div class="pagination">';
         
         // Previous page button
         if (currentPage > 1) {
-            paginationHtml += `<button class="pagination-btn" data-page="${currentPage - 1}">Previous</button>`;
+            paginationHtml += `<button class="pagination-btn btn" data-page="${currentPage - 1}">Previous</button>`;
         }
 
         // Page numbers
         for (let i = 1; i <= totalPages; i++) {
             paginationHtml += `
-                <button class="pagination-btn ${i === currentPage ? 'active' : ''}" 
-                    data-page="${i}">${i}</button>
-            `;
+                <button class="pagination-btn btn ${i === currentPage ? 'active' : ''}" 
+                    data-page="${i}">${i}</button>`;
         }
 
         // Next page button
         if (currentPage < totalPages) {
-            paginationHtml += `<button class="pagination-btn" data-page="${currentPage + 1}">Next</button>`;
+            paginationHtml += `<button class="pagination-btn btn" data-page="${currentPage + 1}">Next</button>`;
         }
 
         paginationHtml += '</div>';
@@ -87,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             const data = await response.json();
+            console.log('Search response:', data);
             
             // Clear previous results
             cardContainer.innerHTML = '';
@@ -103,12 +124,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Add pagination
             if (data.pagination) {
+                const paginationElement = document.querySelector('.pagination');
+                console.log('Found pagination element:', !!paginationElement);
+
                 const paginationHTML = createPaginationHTML(data.pagination);
+                console.log('Generated pagination HTML:', paginationHTML);
+
                 document.querySelector('.pagination').innerHTML = paginationHTML;
                 
                 // Add event listeners to pagination buttons
                 document.querySelectorAll('.pagination-btn').forEach(button => {
                     button.addEventListener('click', () => {
+                        console.log('Pagination button clicked:', button.dataset.page);
                         performSearch(formData, parseInt(button.dataset.page));
                     });
                 });
@@ -129,10 +156,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const initialFormData = new FormData(searchForm);
+    performSearch(initialFormData, 1);
+
     // Event delegation for delete button function
     cardContainer.addEventListener('click', (event) => {
-
-        console.log('Card Container clicked', event.target);
 
         if (event.target.classList.contains('btn-delete')) {
 

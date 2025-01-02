@@ -9,12 +9,16 @@
 </head>
 <body>
     <header>
-        <h1>Brandon's Address Book</h1>
-        <a href="/api/new-address" class="btn">Add New Address</a>
-        <%- include('./partials/search-form.ejs') %>
-        <%- include('./partials/pagination.ejs') %>
+        <h1>Address Book</h1>
+        <button class="btn">
+            <a href="/api/new-address" class="btn">Add New Address</a>
+        </button>
     </header>
     <main>
+        <div id="search-container">
+            <%- include('./partials/search-form.ejs') %>
+            <%- include('./partials/pagination.ejs') %>
+        </div>
         <div class="card-container">
             <% addresses.forEach(address => { %>
                 <div class="card">

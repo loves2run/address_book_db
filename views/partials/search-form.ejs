@@ -1,14 +1,22 @@
 <form action="" id="searchForm" class="searchSection" role="search" aria-label="Address Search">
     <div class="search-controls-upper">
-        <input type="text" id="firstName" name="firstName" class="search-input" placeholder="First Name" aria-label="Search by first name">
-        <input type="text" id="lastName" name="lastName" class="search-input" placeholder="Last Name" aria-label="Search by last name">
-        <input type="text" id="phone" name="phone" class="search-input" placeholder="Phone" aria-label="Search by phone number">
-        <input type="text" id="city" name="city" class="search-input" placeholder="City" aria-label="Search by city">
-        <input type="text" id="state" name="state" class="search-input" placeholder="State" aria-label="Search by state">
-        <input type="text" id="zipcode" name="zipCode" class="search-input" placeholder="Zip Code" aria-label="Search by zip code">
-        <input type="text" id="category" name="category" class="search-input" placeholder="Categories (comma-separated)" aria-label="Search by geategory">
+        <div class="form-group">
+            <input type="text" id="firstName" name="firstName" class="search-input" placeholder="First Name" aria-label="Search by first name">
+            <input type="text" id="lastName" name="lastName" class="search-input" placeholder="Last Name" aria-label="Search by last name">
+        </div>
+       
+        <div class="form-group">
+            <input type="text" id="city" name="city" class="search-input" placeholder="City" aria-label="Search by city">
+            <input type="text" id="state" name="state" class="search-input" placeholder="State" aria-label="Search by state">
+            <input type="text" id="zipcode" name="zipCode" class="search-input" placeholder="Zip Code" aria-label="Search by zip code">
+        </div>
+       
+        <div class="form-group">
+            <input type="text" id="phone" name="phone" class="search-input" placeholder="Phone" aria-label="Search by phone number">
+            <input type="text" id="category" name="category" class="search-input" placeholder="Categories (comma-separated)" aria-label="Search by geategory">
+        </div>
     </div>
-    <div class="sort-controls-lower">
+    <div class="search-controls-lower">
         <select id="sortBy" class="sort-select">
             <option value="lastName">Sort by Last Name</option>
             <option value="firstName">Sort by First Name</option>

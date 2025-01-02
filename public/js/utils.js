@@ -9,23 +9,6 @@ const initializeDeleteModal = () => {
     const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
     const deleteSuccessModal = document.getElementById('deleteSuccessModal');
 
-    // Add click event listeners to all delete buttons
-    // document.querySelectorAll('.btn-delete').forEach((button) => {
-    //     button.addEventListener('click', ()=> {
-    //         const id = button.dataset.id;
-    //         const name = button.dataset.name;
-    //         const address = button.dataset.address;
-
-    //         // Update delete modal content
-    //         modalName.textContent = name;
-    //         modalAddress.textContent = address;
-    //         confirmDeleteBtn.setAttribute('data-id', id);
-
-    //         // Show modal
-    //         deleteModal.classList.add('show');
-    //     });
-    // });
-
     // Handle confirm delete
     confirmDeleteBtn.addEventListener('click', async () => {
         const id = confirmDeleteBtn.getAttribute('data-id');
