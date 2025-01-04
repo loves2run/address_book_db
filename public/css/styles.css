@@ -34,6 +34,7 @@ a.btn {
     background-color: var(--hover-color);
     color: var(--text-color);
     cursor: pointer;
+    border: 1px solid var(--text-color);
   }
 
   /* HEADER STYLES */
