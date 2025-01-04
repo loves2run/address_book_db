@@ -1,11 +1,11 @@
 
 
-<input id="firstName" type="text" name="firstName" value="<%= typeof formData !== 'undefined' ? formData.firstName : '' %>" placeholder="First Name">
-<input id="lastName" type="text" name="lastName" value="<%= typeof formData !== 'undefined' ? formData.lastName : '' %>" placeholder="Last Name">
-<input id="phone" type="text" name="phone" value="<%= typeof formData !== 'undefined' ? formData.phone : '' %>" placeholder="Phone">
-<input id="email" type="email" name="email" value="<%= typeof formData !== 'undefined' ? formData.email : '' %>" placeholder="Email">
-<input id="streetAddress" type="text" name="streetAddress" value="<%= typeof formData !== 'undefined' ? formData.streetAddress : '' %>" placeholder="Street Address">
-<input id="city" type="text" name="city" value="<%= typeof formData !== 'undefined' ? formData.city : '' %>" placeholder="city">
-<input id="state" type="text" name="state" value="<%= typeof formData !== 'undefined' ? formData.state : '' %>" placeholder="State">
-<input id="zipCode" type="text" name="zipCode" value="<%= typeof formData !== 'undefined' ? formData.zipCode : '' %>" placeholder="Zip Code">
-<input id="category-tags" type="text" name="category" value="<%= typeof formData !== 'undefined' ? formData.category : '' %>" placeholder="Enter categories (separate with commas)" title="Enter categories separated by commas, e.g.: family, work, school">
+<input id="firstName" class="input" type="text" name="firstName" value="<%= typeof formData !== 'undefined' ? formData.firstName : '' %>" placeholder="First Name" aria-label="Add first name">
+<input id="lastName" class="input" type="text" name="lastName" value="<%= typeof formData !== 'undefined' ? formData.lastName : '' %>" placeholder="Last Name" aria-label="Add last name">
+<input id="phone" class="input" type="text" name="phone" value="<%= typeof formData !== 'undefined' ? formData.phone : '' %>" placeholder="Phone" aria-label="Add phone number">
+<input id="email" class="input" type="email" name="email" value="<%= typeof formData !== 'undefined' ? formData.email : '' %>" placeholder="Email" aria-label="Add email address">
+<input id="streetAddress" class="input" type="text" name="streetAddress" value="<%= typeof formData !== 'undefined' ? formData.streetAddress : '' %>" placeholder="Street Address" aria-label="Add street Address">
+<input id="city" class="input" type="text" name="city" value="<%= typeof formData !== 'undefined' ? formData.city : '' %>" placeholder="city" aria-label="Add city">
+<input id="state" class="input" type="text" name="state" value="<%= typeof formData !== 'undefined' ? formData.state : '' %>" placeholder="State" aria-label="Add state">
+<input id="zipCode" class="input" type="text" name="zipCode" value="<%= typeof formData !== 'undefined' ? formData.zipCode : '' %>" placeholder="Zip Code" aria-label="Add zip code">
+<input id="category-tags" class="input" type="text" name="category" value="<%= typeof formData !== 'undefined' ? formData.category : '' %>" placeholder="Enter categories (separate with commas)" title="Enter categories separated by commas, e.g.: family, work, school" aria-label="Add categories separated by commas, e.g.: family, work, school">

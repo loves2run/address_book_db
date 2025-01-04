@@ -14,10 +14,10 @@
         <div class="error"><%= error %></div>
     <% } %>
 
-    <form action="<%= action %>" method="POST">
+    <form id="editAddressForm" action="<%= action %>" method="POST">
         <%- include('partials/form-fields.ejs') %>
-        <div class="formControls">
-            <button class="btn" type="submit">Update Address</button>
+        <div class="form-actions">
+            <button class="btn" type="submit">Update</button>
             <button class="btn" type="button" id="cancelEditBtn">Cancel</button>
         </div>
     </form>

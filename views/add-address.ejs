@@ -14,9 +14,12 @@
         <div class="error"><%= error %></div>
     <% } %>
 
-    <form action="/api/new-address" method="POST">
+    <form id="addAddressForm" action="/api/new-address" method="POST" aria-label="Add Address Form">
         <%- include('partials/form-fields.ejs') %>
-        <button class="btn" type="submit">Add Address</button>
+        <div class="form-actions">
+            <button class="btn" type="submit">Add Address</button>
+            <a href="/api/" class="btn">Cancel</a>
+        </div>
     </form>
 
 </body>

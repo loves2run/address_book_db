@@ -40,13 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="card-section">
                         <p>Categories</p>
-                        <p>${address.category}</p>
+                        <p>${address.category.join(', ')}</p>
                     </div>
                 </div>
                 <div class="card-actions">
-                    <button class="btn-edit btn">
-                        <a href="/api/edit/${address._id}" class="btn">Edit</a><br>
-                    </button>
+                    <a href="/api/edit/${address._id}" class="btn">Edit</a><br>
                     <button 
                         class="btn-delete btn"
                         type="button"

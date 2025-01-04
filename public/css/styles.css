@@ -1,7 +1,7 @@
 /* GLOBAL STYLES */
 :root {
     --primary-color: #536972;
-    --hover-color: #a6b2b5;
+    --hover-color: #fff;
     --background-color: #e8e3d9;
     --card-color: #e2a54d;
     --border-color: #b87458;
@@ -18,17 +18,22 @@ body {
     color: var(--text-color);
   }
 
-.btn {
+.btn,
+a.btn {
+    font-size: 1rem;
     padding: .25rem .5rem;
     color: white;
     background-color: var(--primary-color);
     text-decoration: none;
     text-align: center;
     border-radius: 3px;
+    border: none;
   }
 
   .btn:hover {
     background-color: var(--hover-color);
+    color: var(--text-color);
+    cursor: pointer;
   }
 
   /* HEADER STYLES */
@@ -45,6 +50,7 @@ body {
     display: flex;
     justify-content: center;
     margin: .5rem 0;
+    color: var(--text-color);
   }
 
   header button {
@@ -54,14 +60,16 @@ body {
     max-width: 343px;
   }
 
-/* SEARCH FORM */
+/* FORM STYLES*/
 #search-container {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-#searchForm {
+#searchForm,
+#addAddressForm,
+#editAddressForm {
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -88,8 +96,10 @@ body {
     flex-direction: column;
 }
 
-.search-input {
+.input {
     padding: .25rem .5rem;
+    color: var(--text-color);
+    font-size: 1rem;
 }
 
 .form-actions {
@@ -99,7 +109,8 @@ body {
     gap: 1.25rem;
 }
 
-.form-actions button {
+.form-actions button,
+.form-actions a {
     padding: 0;
     height: 1.6rem;
     width: 50%;
@@ -108,6 +119,11 @@ body {
 
 .sort-select {
     padding: .25rem .5rem;
+}
+
+#addAddressForm .form-actions,
+#editAddressForm .form-actions {
+    margin-top: .5rem;
 }
 
   /* PAGINATION STYLES */
