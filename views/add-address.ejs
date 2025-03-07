@@ -14,13 +14,15 @@
         <div class="error"><%= error %></div>
     <% } %>
 
-    <form id="addAddressForm" action="/api/new-address" method="POST" aria-label="Add Address Form">
-        <%- include('partials/form-fields.ejs') %>
-        <div class="form-actions">
-            <button class="btn" type="submit">Add Address</button>
-            <a href="/api/" class="btn">Cancel</a>
-        </div>
-    </form>
+    <div class="form-container">
+        <form id="addAddressForm" action="/api/new-address" method="POST" aria-label="Add Address Form">
+            <%- include('partials/form-fields.ejs') %>
+            <div class="form-actions">
+                <button class="btn" type="submit">Add Address</button>
+                <a href="/api/" class="btn">Cancel</a>
+            </div>
+        </form>
+    </div>
 
 </body>
 </html>

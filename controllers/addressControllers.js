@@ -5,7 +5,7 @@ import validator from 'validator';
 //controller to get all addresses
 export const getAllAddresses = async (req, res) => {
     try {
-        const addresses = await Address.find();  //Fetch all addresses
+        const addresses = await Address.find().sort({ lastName: 1});  //Fetch all addresses
         res.render('view-addresses', { addresses });  //Render the view-addresses.ejs
     } catch (err) {
         console.error('Error fetching addresses', err);

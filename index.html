@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Address Book</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --hover-color: #2980b9;
+            --background-color: #f5f6fa;
+            --card-color: #ffffff;
+            --text-color: #2c3e50;
+            --border-color: #e1e8ed;
+            --pagination-color: #34495e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .search-section {
+            background: var(--card-color);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .sort-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .search-input, .sort-select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .address-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .address-card {
+            background: var(--card-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .address-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .name {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .category-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .category {
+            background: #e8f4fd;
+            color: var(--primary-color);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .contact-info {
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+
+        .contact-info i {
+            width: 20px;
+            color: var(--primary-color);
+        }
+
+        .address-details {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--hover-color);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .pagination-info {
+            color: var(--pagination-color);
+            margin: 0 15px;
+        }
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .address-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .sort-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Address Book</h1>
+            <a href="/addresses/new" class="btn">Add New Contact</a>
+        </div>
+
+        <section class="search-section">
+            <div class="search-controls">
+                <input type="text" id="firstName" class="search-input" placeholder="First Name">
+                <input type="text" id="lastName" class="search-input" placeholder="Last Name">
+                <input type="text" id="phone" class="search-input" placeholder="Phone">
+                <input type="text" id="city" class="search-input" placeholder="City">
+                <input type="text" id="state" class="search-input" placeholder="State">
+                <input type="text" id="zipcode" class="search-input" placeholder="Zip Code">
+                <input type="text" id="category" class="search-input" placeholder="Categories (comma-separated)">
+            </div>
+            <div class="sort-controls">
+                <select id="sortBy" class="sort-select">
+                    <option value="lastName">Sort by Last Name</option>
+                    <option value="firstName">Sort by First Name</option>
+                    <option value="city">Sort by City</option>
+                    <option value="state">Sort by State</option>
+                </select>
+                <select id="sortOrder" class="sort-select">
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                </select>
+            </div>
+        </section>
+
+        <div id="addressGrid" class="address-grid">
+            <!-- Address cards will be populated here -->
+        </div>
+
+        <div class="pagination">
+            <button id="prevPage" class="btn">Previous</button>
+            <span class="pagination-info">Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
+            <button id="nextPage" class="btn">Next</button>
+        </div>
+    </div>
+
+    <div class="loading" id="loading">Loading...</div>
+
+    <script>
+        let currentPage = 1;
+        const limit = 10;
+        let debounceTimeout;
+
+        // Function to debounce search
+        function debounce(func, wait) {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(func, wait);
+        }
+
+        // Function to get search parameters
+        function getSearchParams() {
+            return {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                phone: document.getElementById('phone').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zipcode: document.getElementById('zipcode').value,
+                category: document.getElementById('category').value,
+                sortBy: document.getElementById('sortBy').value,
+                sortOrder: document.getElementById('sortOrder').value,
+                page: currentPage,
+                limit
+            };
+        }
+
+        // Function to build query string
+        function buildQueryString(params) {
+            return Object.keys(params)
+                .filter(key => params[key])
+                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+                .join('&');
+        }
+
+        // Function to render address cards
+        function renderAddresses(addresses) {
+            const grid = document.getElementById('addressGrid');
+            grid.innerHTML = addresses.map(address => `
+                <div class="address-card">
+                    <div class="card-header">
+                        <h2 class="name">${address.firstName} ${address.lastName}</h2>
+                    </div>
+                    
+                    <div class="category-tags">
+                        ${address.category.map(cat => `
+                            <span class="category">${cat}</span>
+                        `).join('')}
+                    </div>
+
+                    <div class="contact-info">
+                        <div>${address.email}</div>
+                        <div>${address.phone}</div>
+                    </div>
+
+                    <div class="address-details">
+                        <div>${address.streetAddress}</div>
+                        <div>${address.city}, ${address.state} ${address.zipCode}</div>
+                    </div>
+
+                    <div class="card-actions">
+                        <a href="/addresses/edit/${address._id}" class="btn">Edit</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Function to update pagination
+        function updatePagination(pagination) {
+            document.getElementById('currentPage').textContent = pagination.currentPage;
+            document.getElementById('totalPages').textContent = pagination.totalPages;
+            document.getElementById('prevPage').disabled = !pagination.hasPrevPage;
+            document.getElementById('nextPage').disabled = !pagination.hasNextPage;
+        }
+
+        // Function to fetch addresses
+        async function fetchAddresses() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+
+            try {
+                const params = getSearchParams();
+                const queryString = buildQueryString(params);
+                const response = await fetch(`/api/search?${queryString}`);
+                const data = await response.json();
+
+                if (data.status === 'Success') {
+                    renderAddresses(data.data.results);
+                    updatePagination(data.data.pagination);
+                }
+            } catch (error) {
+                console.error('Error fetching addresses:', error);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Event listeners
+        document.querySelectorAll('.search-input').forEach(input => {
+            input.addEventListener('input', () => debounce(fetchAddresses, 300));
+        });
+
+        document.querySelectorAll('.sort-select').forEach(select => {
+            select.addEventListener('change', fetchAddresses);
+        });
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                fetchAddresses();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            currentPage++;
+            fetchAddresses();
+        });
+
+        // Initial load
+        fetchAddresses();
+    </script>
+</body>
+</html>

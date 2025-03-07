@@ -20,7 +20,7 @@ export const deleteAddress = async (req, res) => {
             return res.status(404).send('Address not found');
         }
 
-        // console.log('Deleted Address:', deletedAddress);
+        console.log('Deleted Address:', deletedAddress);
 
         //send success response
         return res.status(200).json({

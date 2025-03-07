@@ -14,13 +14,15 @@
         <div class="error"><%= error %></div>
     <% } %>
 
-    <form id="editAddressForm" action="<%= action %>" method="POST">
-        <%- include('partials/form-fields.ejs') %>
-        <div class="form-actions">
-            <button class="btn" type="submit">Update</button>
-            <button class="btn" type="button" id="cancelEditBtn">Cancel</button>
-        </div>
-    </form>
+    <div class="form-container">
+        <form id="editAddressForm" action="<%= action %>" method="POST">
+            <%- include('partials/form-fields.ejs') %>
+            <div class="form-actions">
+                <button class="btn" type="submit">Update</button>
+                <button class="btn" type="button" id="cancelEditBtn">Cancel</button>
+            </div>
+        </form>
+    </div>
 
     <!-- Modal for delete confirmation box -->
     <div id="cancelEditModal" class="modal">
@@ -89,44 +91,6 @@
         });
 
     </script>
-
-    <style>
-        /* .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .modalContent {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-        }
-
-        #confirmCancelBtn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        #continueEditBtn {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            cursor: pointer;
-        } */
-    </style>
 </body>
 </html>
 

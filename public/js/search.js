@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingIndicator.style.display = show ? 'block' : 'none';
     };
 
-    // Function to create address card HTML matching existing structure
     const createAddressCard = (address) => {
         return `
             <div class="card">
@@ -33,10 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p>Email</p>
                         <p>${address.email || 'N/A'}</p>
                     </div>              
-                    <div class="card-section">
+                    <div class="card-section address-section">
                         <p>Address</p>
                         <p>${address.streetAddress}</p>
-                        <p>${address.city}, ${address.state} ${address.zipCode}</p>
+                        <p>${address.city}, <span class="state">${address.state}</span> ${address.zipCode}</p>
                     </div>
                     <div class="card-section">
                         <p>Categories</p>
@@ -208,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Add input event listeners for real-time search
-    const inputs = searchForm.querySelectorAll('.search-input');
+    const inputs = searchForm.querySelectorAll('.input');
     const debouncedSearch = debounce(() => {
         const formData = new FormData(searchForm);
         performSearch(formData);
